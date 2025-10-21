@@ -22,4 +22,15 @@ function formatCoordinate(row, col) {
   return `${letter}${number}`;
 }
 
-export { parseCoordinates, formatCoordinate };
+function randomCoordinate() {
+  const randomize = function () {
+    return Math.floor(Math.random() * 10);
+  };
+
+  let rowRandom = randomize();
+  let colRandom = randomize();
+
+  return formatCoordinate(rowRandom, colRandom);
+}
+
+module.exports = { parseCoordinates, formatCoordinate, randomCoordinate };
