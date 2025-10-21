@@ -11,24 +11,24 @@ describe("Player", () => {
     player2 = new ComputerPlayer();
   });
 
-  it("should call receiveAttack on opponents gameboard when attacking", () => {
+  test("should call receiveAttack on opponents gameboard when attacking", () => {
     let spy = jest.spyOn(player2.gameboard, "receiveAttack");
     player1.attack("A1", player2);
     expect(spy).toHaveBeenCalledWith("A1");
   });
 
-  it("(computer) should launch attack at randomly generated coordinate", () => {
+  test("(computer) should launch attack at randomly generated coordinate", () => {
     let spy = jest.spyOn(helpers, "randomCoordinate");
     player2.attack(player1);
     expect(spy).toHaveBeenCalled();
   });
 
-  it("should store attack coordinates", () => {
+  test("should store attack coordinates", () => {
     player1.attack("A1", player2);
     expect(player1.prevAttacks.size).toBe(1);
   });
 
-  it("(human) should not allow attack at repeat coordinates", () => {
+  test("(human) should not allow attack at repeat coordinates", () => {
     player1.attack("A1", player2);
     expect(player1.attack("A1", player2)).toEqual({
       valid: false,
@@ -36,7 +36,7 @@ describe("Player", () => {
     });
   });
 
-  it("(computer) should not allow attack at repeat coordinates", () => {
+  test("(computer) should not allow attack at repeat coordinates", () => {
     player2.attack(player1);
 
     const lastAttack = Array.from(player2.prevAttacks)[0];
