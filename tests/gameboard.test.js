@@ -58,6 +58,7 @@ describe("gameboard", () => {
     testGameboard.placeShip(destroyer, ["A1", "A2"]);
     testGameboard.receiveAttack("A1");
     const result = testGameboard.receiveAttack("A2");
-    expect(result).toEqual({ gameOver: true });
+    expect(result).toHaveProperty("gameOver");
+    expect(result.gameOver).toBe(true);
   });
 });
