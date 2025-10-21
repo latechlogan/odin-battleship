@@ -1,4 +1,4 @@
-import { parseCoordinates } from "./helpers";
+const helpers = require("./helpers");
 
 class Gameboard {
   constructor() {
@@ -9,12 +9,12 @@ class Gameboard {
   placeShip(ship, coordinates) {
     this.ships.push({
       ship: ship,
-      coordinates: parseCoordinates(coordinates),
+      coordinates: helpers.parseCoordinates(coordinates),
     });
   }
 
   receiveAttack(coord) {
-    let attack = parseCoordinates(coord);
+    let attack = helpers.parseCoordinates(coord);
     let shipAttacked = this.ships.find((obj) =>
       obj.coordinates.some(
         (coord) => coord[0] === attack[0] && coord[1] === attack[1]
