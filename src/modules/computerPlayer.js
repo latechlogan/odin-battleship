@@ -2,10 +2,6 @@ const Player = require("./player");
 const helpers = require("./helpers");
 
 class ComputerPlayer extends Player {
-  constructor() {
-    super();
-  }
-
   attack(opponent) {
     let randCoord = helpers.randomCoordinate();
 

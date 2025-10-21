@@ -1,10 +1,6 @@
 const Player = require("./player");
 
 class HumanPlayer extends Player {
-  constructor() {
-    super();
-  }
-
   attack(coord, opponent) {
     if (this.checkPrevAttacks(coord)) {
       return {
