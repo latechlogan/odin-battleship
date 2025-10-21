@@ -9,7 +9,13 @@ class HumanPlayer extends Player {
       };
     }
     this.prevAttacks.add(coord);
-    opponent.gameboard.receiveAttack(coord);
+    let result = opponent.gameboard.receiveAttack(coord);
+    return {
+      valid: true,
+      hit: result.hit,
+      isSunk: result.isSunk,
+      gameOver: result.gameOver,
+    };
   }
 }
 
