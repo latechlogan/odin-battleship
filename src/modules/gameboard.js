@@ -32,17 +32,15 @@ class Gameboard {
 
     if (shipAttacked) {
       shipAttacked.ship.hit();
-      if (shipAttacked.ship.isSunk()) {
-        if (this.fleetIsSunk()) {
-          return { hit: true, isSunk: true, gameOver: true };
+      if (shipAttacked.ship.sunk()) {
+        if (this.fleetSunk()) {
+          return { valid: true, hit: true, sunk: true, gameOver: true };
         }
-        return { hit: true, isSunk: true, gameOver: false };
+        return { valid: true, hit: true, sunk: true, gameOver: false };
       }
-      return { hit: true, isSunk: false, gameOver: false };
-    } else {
-      this.missedAttacks.push(attack);
-      return { hit: false, isSunk: false, gameOver: false };
+      return { valid: true, hit: true, sunk: false, gameOver: false };
     }
+    return { valid: true, hit: false, sunk: false, gameOver: false };
   }
 
   fleetSunk() {
