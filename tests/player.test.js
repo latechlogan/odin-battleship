@@ -68,12 +68,12 @@ describe("Player", () => {
     expect(result.hit).toBe(false);
   });
 
-  test("(human) should return isSunk status when ship is sunk", () => {
+  test("(human) should return sunk status when ship is sunk", () => {
     const destroyer = new Ship(2);
     player2.gameboard.placeShip(destroyer, ["A1", "A2"]);
     player1.attack("A1", player2);
     const result = player1.attack("A2", player2);
-    expect(result.isSunk).toBe(true);
+    expect(result.sunk).toBe(true);
   });
 
   test("(human) should return gameOver status when fleet is sunk", () => {

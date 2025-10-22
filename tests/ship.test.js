@@ -21,12 +21,12 @@ describe("Ship", () => {
   });
 
   test("is not sunk when first created", () => {
-    expect(testShip.isSunk()).toBe(false);
+    expect(testShip.sunk()).toBe(false);
   });
 
-  test("updates isSunk when hits equal or exceed ship length", () => {
+  test("updates sunk when hits equal or exceed ship length", () => {
     testShip.hit();
     testShip.hit();
-    expect(testShip.isSunk()).toBe(true);
+    expect(testShip.sunk()).toBe(true);
   });
 });

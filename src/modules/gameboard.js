@@ -36,8 +36,8 @@ class Gameboard {
     }
   }
 
-  fleetIsSunk() {
-    return this.ships.every((obj) => obj.ship.isSunk());
+  fleetSunk() {
+    return this.ships.every((obj) => obj.ship.sunk());
   }
 }
 
