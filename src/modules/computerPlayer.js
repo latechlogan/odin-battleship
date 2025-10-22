@@ -5,7 +5,7 @@ class ComputerPlayer extends Player {
   attack(opponent) {
     let randCoord = helpers.randomCoordinate();
 
-    while (this.checkPrevAttacks(randCoord)) {
+    while (this.prevAttacks.has(randCoord)) {
       randCoord = helpers.randomCoordinate();
     }
 

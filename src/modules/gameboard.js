@@ -3,7 +3,7 @@ const helpers = require("./helpers");
 class Gameboard {
   constructor() {
     this.ships = [];
-    this.missedAttacks = [];
+    this.prevAttacks = new Set();
   }
 
   placeShip(ship, coordinates) {
@@ -14,6 +14,15 @@ class Gameboard {
   }
 
   receiveAttack(coord) {
+    if (this.prevAttacks.has(coord)) {
+      return {
+        valid: false,
+        reason: "The coordinates have already been attacked.",
+      };
+    }
+
+    this.prevAttacks.add(coord);
+
     let attack = helpers.parseCoordinates(coord);
     let shipAttacked = this.ships.find((obj) =>
       obj.coordinates.some(

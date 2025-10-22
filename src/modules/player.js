@@ -9,10 +9,6 @@ class Player {
   attack(coord, opponent) {
     throw new Error("attack() must be implemented by subclasses");
   }
-
-  checkPrevAttacks(coord) {
-    return this.prevAttacks.has(coord);
-  }
 }
 
 module.exports = Player;
