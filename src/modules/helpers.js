@@ -33,4 +33,24 @@ function randomCoordinate() {
   return formatCoordinate(rowRandom, colRandom);
 }
 
-module.exports = { parseCoordinates, formatCoordinate, randomCoordinate };
+function validateCoordinates(coordinates) {
+  let parsed = parseCoordinates(coordinates);
+
+  let coordArray = typeof parsed[0] === "number" ? [parsed] : parsed;
+
+  for (let coord of coordArray) {
+    let [x, y] = coord;
+    if (x < 0 || x > 9 || y < 0 || y > 9) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = {
+  parseCoordinates,
+  formatCoordinate,
+  randomCoordinate,
+  validateCoordinates,
+};
