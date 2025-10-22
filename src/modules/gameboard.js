@@ -19,6 +19,10 @@ class Gameboard {
       throw new Error("Ships cannot overlap");
     }
 
+    if (this.verifyAdjacent(coordinates) == false) {
+      throw new Error("Coordinates must be adjacent");
+    }
+
     this.ships.push({
       ship: ship,
       coordinates: helpers.parseCoordinates(coordinates),
@@ -70,6 +74,21 @@ class Gameboard {
 
     for (let target of targetCoords) {
       if (occupied.has(target)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  verifyAdjacent(targetCoords) {
+    let targetCoordsArray = helpers.parseCoordinates(targetCoords);
+
+    for (let i = 1; i < targetCoordsArray.length; i++) {
+      let [prevX, prevY] = targetCoordsArray[i - 1];
+      let [currX, currY] = targetCoordsArray[i];
+
+      if (Math.abs(prevX - currX) > 1 || Math.abs(prevY - currY) > 1) {
         return false;
       }
     }
