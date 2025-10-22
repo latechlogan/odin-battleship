@@ -7,6 +7,18 @@ class Gameboard {
   }
 
   placeShip(ship, coordinates) {
+    if (ship.length !== coordinates.length) {
+      throw new Error("Coordinates don't match ship length");
+    }
+
+    if (helpers.validateCoordinates(coordinates) == false) {
+      throw new Error("Coordinates out of bounds");
+    }
+
+    if (this.checkAvailability(coordinates) == false) {
+      throw new Error("Ships cannot overlap");
+    }
+
     this.ships.push({
       ship: ship,
       coordinates: helpers.parseCoordinates(coordinates),
@@ -45,6 +57,24 @@ class Gameboard {
 
   fleetSunk() {
     return this.ships.every((obj) => obj.ship.sunk());
+  }
+
+  checkAvailability(targetCoords) {
+    let occupied = new Set(
+      this.ships.flatMap((obj) =>
+        obj.coordinates.flatMap((coord) =>
+          helpers.formatCoordinate(coord[0], coord[1])
+        )
+      )
+    );
+
+    for (let target of targetCoords) {
+      if (occupied.has(target)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
 
