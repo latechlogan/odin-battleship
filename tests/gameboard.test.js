@@ -112,4 +112,74 @@ describe("gameboard", () => {
     const result = testGameboard.receiveAttack("A1");
     expect(result.valid).toBe(true);
   });
+
+  // ship placement validation
+  test("should not allow ship placement with out of bounds coordinates", () => {
+    const destroyer = new Ship(2);
+    expect(() => {
+      testGameboard.placeShip(destroyer, ["Z99", "Z100"]);
+    }).toThrow();
+  });
+
+  test("should not allow ship placement when coordinates don't match ship length", () => {
+    const destroyer = new Ship(2);
+    expect(() => {
+      testGameboard.placeShip(destroyer, ["A1", "A2", "A3"]);
+    }).toThrow();
+  });
+
+  test("should not allow ship placement when ships overlap", () => {
+    const destroyer = new Ship(2);
+    const submarine = new Ship(3);
+    testGameboard.placeShip(destroyer, ["A1", "A2"]);
+    expect(() => {
+      testGameboard.placeShip(submarine, ["A2", "A3", "A4"]);
+    }).toThrow("Ships cannot overlap");
+  });
+
+  test("should not allow ship placement when coordinates are not adjacent", () => {
+    const destroyer = new Ship(2);
+    expect(() => {
+      testGameboard.placeShip(destroyer, ["A1", "A3"]);
+    }).toThrow("Coordinates must be adjacent");
+  });
+
+  test.skip("should not allow ship placement when coordinates don't form a line", () => {
+    const submarine = new Ship(3);
+    expect(() => {
+      testGameboard.placeShip(submarine, ["A1", "A2", "B2"]);
+    }).toThrow("Coordinates must form a straight line");
+  });
+
+  test.skip("should allow valid horizontal ship placement", () => {
+    const destroyer = new Ship(3);
+    expect(() => {
+      testGameboard.placeShip(destroyer, ["A1", "A2", "A3"]);
+    }).not.toThrow();
+  });
+
+  test.skip("should allow valid vertical ship placement", () => {
+    const destroyer = new Ship(3);
+    expect(() => {
+      testGameboard.placeShip(destroyer, ["A1", "B1", "C1"]);
+    }).not.toThrow();
+  });
+
+  // attack coordinate validation
+  test.skip("should not allow attack on invalid coordinate format", () => {
+    const result = testGameboard.receiveAttack("ABC");
+    expect(result.valid).toBe(false);
+    expect(result.reason).toMatch(/invalid/i);
+  });
+
+  test.skip("should not allow attack on out of bounds coordinate", () => {
+    const result = testGameboard.receiveAttack("Z99");
+    expect(result.valid).toBe(false);
+    expect(result.reason).toMatch(/out of bounds/i);
+  });
+
+  test.skip("should allow attack on valid coordinate", () => {
+    const result = testGameboard.receiveAttack("A1");
+    expect(result.valid).toBe(true);
+  });
 });
