@@ -34,6 +34,13 @@ class Gameboard {
   }
 
   receiveAttack(coord) {
+    if (helpers.validateCoordinates(coord) == false) {
+      return {
+        valid: false,
+        reason: "The coordinates are out of bounds.",
+      };
+    }
+
     if (this.prevAttacks.has(coord)) {
       return {
         valid: false,
