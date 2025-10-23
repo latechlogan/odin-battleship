@@ -23,6 +23,10 @@ class Gameboard {
       throw new Error("Coordinates must be adjacent");
     }
 
+    if (this.verifyAlignment(coordinates) == false) {
+      throw new Error("Coordinates must form a straight line");
+    }
+
     this.ships.push({
       ship: ship,
       coordinates: helpers.parseCoordinates(coordinates),
@@ -92,6 +96,18 @@ class Gameboard {
         return false;
       }
     }
+
+    return true;
+  }
+
+  verifyAlignment(targetCoords) {
+    let targetCoordsArray = helpers.parseCoordinates(targetCoords);
+    let [compareX, compareY] = targetCoordsArray[0];
+
+    let diffX = targetCoordsArray.filter((coord) => coord[0] !== compareX);
+    let diffY = targetCoordsArray.filter((coord) => coord[1] !== compareY);
+
+    if (diffX.length && diffY.length) return false;
 
     return true;
   }
