@@ -1,4 +1,5 @@
 const Player = require("./player");
+const helpers = require("./helpers");
 
 class HumanPlayer extends Player {
   attack(coord, opponent) {

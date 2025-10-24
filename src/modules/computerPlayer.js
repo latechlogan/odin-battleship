@@ -10,7 +10,7 @@ class ComputerPlayer extends Player {
     }
 
     this.prevAttacks.add(randCoord);
-    opponent.gameboard.receiveAttack(randCoord);
+    return opponent.gameboard.receiveAttack(randCoord);
   }
 }
 

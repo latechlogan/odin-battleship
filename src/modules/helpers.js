@@ -34,9 +34,8 @@ function randomCoordinate() {
 }
 
 function validateCoordinates(coordinates) {
-  let parsed = parseCoordinates(coordinates);
-
-  let coordArray = typeof parsed[0] === "number" ? [parsed] : parsed;
+  let coordArray =
+    typeof coordinates[0] === "number" ? [coordinates] : coordinates;
 
   for (let coord of coordArray) {
     let [x, y] = coord;

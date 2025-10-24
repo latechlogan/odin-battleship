@@ -7,11 +7,13 @@ class Gameboard {
   }
 
   placeShip(ship, coordinates) {
-    if (ship.length !== coordinates.length) {
+    let shipCoordinates = helpers.parseCoordinates(coordinates);
+
+    if (ship.length !== shipCoordinates.length) {
       throw new Error("Coordinates don't match ship length");
     }
 
-    if (helpers.validateCoordinates(coordinates) == false) {
+    if (helpers.validateCoordinates(shipCoordinates) == false) {
       throw new Error("Coordinates out of bounds");
     }
 
@@ -19,22 +21,24 @@ class Gameboard {
       throw new Error("Ships cannot overlap");
     }
 
-    if (this.verifyAdjacent(coordinates) == false) {
+    if (this.verifyAdjacent(shipCoordinates) == false) {
       throw new Error("Coordinates must be adjacent");
     }
 
-    if (this.verifyAlignment(coordinates) == false) {
+    if (this.verifyAlignment(shipCoordinates) == false) {
       throw new Error("Coordinates must form a straight line");
     }
 
     this.ships.push({
       ship: ship,
-      coordinates: helpers.parseCoordinates(coordinates),
+      coordinates: shipCoordinates,
     });
   }
 
   receiveAttack(coord) {
-    if (helpers.validateCoordinates(coord) == false) {
+    let attackCoordinates = helpers.parseCoordinates(coord);
+
+    if (helpers.validateCoordinates(attackCoordinates) == false) {
       return {
         valid: false,
         reason: "The coordinates are out of bounds.",
@@ -50,10 +54,10 @@ class Gameboard {
 
     this.prevAttacks.add(coord);
 
-    let attack = helpers.parseCoordinates(coord);
     let shipAttacked = this.ships.find((obj) =>
       obj.coordinates.some(
-        (coord) => coord[0] === attack[0] && coord[1] === attack[1]
+        (coord) =>
+          coord[0] === attackCoordinates[0] && coord[1] === attackCoordinates[1]
       )
     );
 
@@ -93,11 +97,9 @@ class Gameboard {
   }
 
   verifyAdjacent(targetCoords) {
-    let targetCoordsArray = helpers.parseCoordinates(targetCoords);
-
-    for (let i = 1; i < targetCoordsArray.length; i++) {
-      let [prevX, prevY] = targetCoordsArray[i - 1];
-      let [currX, currY] = targetCoordsArray[i];
+    for (let i = 1; i < targetCoords.length; i++) {
+      let [prevX, prevY] = targetCoords[i - 1];
+      let [currX, currY] = targetCoords[i];
 
       if (Math.abs(prevX - currX) > 1 || Math.abs(prevY - currY) > 1) {
         return false;
@@ -108,11 +110,10 @@ class Gameboard {
   }
 
   verifyAlignment(targetCoords) {
-    let targetCoordsArray = helpers.parseCoordinates(targetCoords);
-    let [compareX, compareY] = targetCoordsArray[0];
+    let [compareX, compareY] = targetCoords[0];
 
-    let diffX = targetCoordsArray.filter((coord) => coord[0] !== compareX);
-    let diffY = targetCoordsArray.filter((coord) => coord[1] !== compareY);
+    let diffX = targetCoords.filter((coord) => coord[0] !== compareX);
+    let diffY = targetCoords.filter((coord) => coord[1] !== compareY);
 
     if (diffX.length && diffY.length) return false;
 

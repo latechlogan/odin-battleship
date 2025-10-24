@@ -40,7 +40,7 @@ describe("gameboard", () => {
   test("tracks attacks that miss", () => {
     const destroyer = new Ship(2);
     testGameboard.placeShip(destroyer, ["A1", "A2"]);
-    testGameboard.receiveAttack("A3");
+    let result = testGameboard.receiveAttack("A3");
     expect(testGameboard.prevAttacks.has("A3")).toBe(true);
   });
 
@@ -144,21 +144,21 @@ describe("gameboard", () => {
     }).toThrow("Coordinates must be adjacent");
   });
 
-  test.skip("should not allow ship placement when coordinates don't form a line", () => {
+  test("should not allow ship placement when coordinates don't form a line", () => {
     const submarine = new Ship(3);
     expect(() => {
       testGameboard.placeShip(submarine, ["A1", "A2", "B2"]);
     }).toThrow("Coordinates must form a straight line");
   });
 
-  test.skip("should allow valid horizontal ship placement", () => {
+  test("should allow valid horizontal ship placement", () => {
     const destroyer = new Ship(3);
     expect(() => {
       testGameboard.placeShip(destroyer, ["A1", "A2", "A3"]);
     }).not.toThrow();
   });
 
-  test.skip("should allow valid vertical ship placement", () => {
+  test("should allow valid vertical ship placement", () => {
     const destroyer = new Ship(3);
     expect(() => {
       testGameboard.placeShip(destroyer, ["A1", "B1", "C1"]);
@@ -166,19 +166,19 @@ describe("gameboard", () => {
   });
 
   // attack coordinate validation
-  test.skip("should not allow attack on invalid coordinate format", () => {
+  test("should not allow attack on invalid coordinate format", () => {
     const result = testGameboard.receiveAttack("ABC");
     expect(result.valid).toBe(false);
     expect(result.reason).toMatch(/invalid/i);
   });
 
-  test.skip("should not allow attack on out of bounds coordinate", () => {
+  test("should not allow attack on out of bounds coordinate", () => {
     const result = testGameboard.receiveAttack("Z99");
     expect(result.valid).toBe(false);
     expect(result.reason).toMatch(/out of bounds/i);
   });
 
-  test.skip("should allow attack on valid coordinate", () => {
+  test("should allow attack on valid coordinate", () => {
     const result = testGameboard.receiveAttack("A1");
     expect(result.valid).toBe(true);
   });

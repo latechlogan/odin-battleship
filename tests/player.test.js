@@ -41,7 +41,7 @@ describe("Player", () => {
   test("(computer) should not allow attack at repeat coordinates", () => {
     player2.attack(player1);
 
-    const lastAttack = Array.from(player2.prevAttacks)[0];
+    const lastAttack = helpers.formatCoordinate(player2.prevAttacks[0]);
     jest.spyOn(helpers, "randomCoordinate").mockReturnValueOnce(lastAttack);
 
     player2.attack(player1);
