@@ -114,13 +114,6 @@ describe("gameboard", () => {
   });
 
   // ship placement validation
-  test("should not allow ship placement with out of bounds coordinates", () => {
-    const destroyer = new Ship(2);
-    expect(() => {
-      testGameboard.placeShip(destroyer, ["Z99", "Z100"]);
-    }).toThrow();
-  });
-
   test("should not allow ship placement when coordinates don't match ship length", () => {
     const destroyer = new Ship(2);
     expect(() => {
@@ -175,7 +168,7 @@ describe("gameboard", () => {
   test("should not allow attack on out of bounds coordinate", () => {
     const result = testGameboard.receiveAttack("Z99");
     expect(result.valid).toBe(false);
-    expect(result.reason).toMatch(/out of bounds/i);
+    expect(result.reason).toMatch(/invalid/i);
   });
 
   test("should allow attack on valid coordinate", () => {

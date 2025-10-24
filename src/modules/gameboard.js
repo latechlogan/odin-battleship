@@ -13,10 +13,6 @@ class Gameboard {
       throw new Error("Coordinates don't match ship length");
     }
 
-    if (helpers.validateCoordinates(shipCoordinates) == false) {
-      throw new Error("Coordinates out of bounds");
-    }
-
     if (this.checkAvailability(coordinates) == false) {
       throw new Error("Ships cannot overlap");
     }
@@ -36,12 +32,13 @@ class Gameboard {
   }
 
   receiveAttack(coord) {
-    let attackCoordinates = helpers.parseCoordinates(coord);
-
-    if (helpers.validateCoordinates(attackCoordinates) == false) {
+    let attackCoordinates;
+    try {
+      attackCoordinates = helpers.parseCoordinates(coord);
+    } catch (error) {
       return {
         valid: false,
-        reason: "The coordinates are out of bounds.",
+        reason: error.message,
       };
     }
 

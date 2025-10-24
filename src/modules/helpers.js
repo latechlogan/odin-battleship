@@ -1,5 +1,10 @@
 function parseCoordinates(input) {
   const parse = function (input) {
+    let regex = /^[a-j]10|[a-j][1-9]$/gi;
+    if (!regex.test(input)) {
+      throw new Error("Invalid coordinates");
+    }
+
     const letter = input[0];
     const number = parseInt(input.slice(1));
     const row = letter.charCodeAt(0) - 65; //'A' = 65 in ASCII
@@ -33,23 +38,8 @@ function randomCoordinate() {
   return formatCoordinate(rowRandom, colRandom);
 }
 
-function validateCoordinates(coordinates) {
-  let coordArray =
-    typeof coordinates[0] === "number" ? [coordinates] : coordinates;
-
-  for (let coord of coordArray) {
-    let [x, y] = coord;
-    if (x < 0 || x > 9 || y < 0 || y > 9) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
 module.exports = {
   parseCoordinates,
   formatCoordinate,
   randomCoordinate,
-  validateCoordinates,
 };
