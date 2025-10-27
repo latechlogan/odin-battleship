@@ -142,8 +142,6 @@ describe("Game", () => {
 
     test("should identify winner when game is over", () => {
       sinkShips(game.computer.gameboard, [0, 1, 2, 3, 4]);
-      console.log(game.player.gameboard.fleetSunk());
-      console.log(game.computer.gameboard.fleetSunk());
       const winner = game.getWinner();
       expect(winner).toBe("Player");
     });
