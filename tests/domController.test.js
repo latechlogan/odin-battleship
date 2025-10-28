@@ -207,7 +207,7 @@ describe("domController", () => {
       domController.attachAttackListeners(boardElement, mockCallback);
     });
 
-    test.skip("calls callback with correct coordinate when game cell is clicked", () => {
+    test("calls callback with correct coordinate when game cell is clicked", () => {
       const gameCell = boardElement.querySelector('[data-coord="A5"]');
       gameCell.click();
 
@@ -215,14 +215,14 @@ describe("domController", () => {
       expect(mockCallback).toHaveBeenCalledWith("A5");
     });
 
-    test.skip("does not call callback when label cell is clicked", () => {
+    test("does not call callback when label cell is clicked", () => {
       const labelCell = boardElement.querySelector(".cell--label");
       labelCell.click();
 
       expect(mockCallback).not.toHaveBeenCalled();
     });
 
-    test.skip("calls callback with correct coordinates for multiple cells", () => {
+    test("calls callback with correct coordinates for multiple cells", () => {
       const a1Cell = boardElement.querySelector('[data-coord="A1"]');
       const j10Cell = boardElement.querySelector('[data-coord="J10"]');
 
@@ -234,7 +234,7 @@ describe("domController", () => {
       expect(mockCallback).toHaveBeenNthCalledWith(2, "J10");
     });
 
-    test.skip("works with all 100 game cells", () => {
+    test("works with all 100 game cells", () => {
       const gameCells = boardElement.querySelectorAll(".cell--game");
 
       expect(gameCells.length).toBe(100);

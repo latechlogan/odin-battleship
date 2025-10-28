@@ -92,7 +92,16 @@ function updateBoard(boardElement, gameboard, showShips) {
   });
 }
 
+function attachAttackListeners(boardElement, callback) {
+  boardElement.addEventListener("click", (e) => {
+    if (e.target.classList.contains("cell--game")) {
+      callback(e.target.dataset.coord);
+    }
+  });
+}
+
 module.exports = {
   createGameboard,
   updateBoard,
+  attachAttackListeners,
 };
