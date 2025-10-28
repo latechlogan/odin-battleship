@@ -1,20 +1,21 @@
+const { formatCoordinate } = require("./helpers");
+
 function createGameboard(boardId) {
   const container = document.createElement("div");
   container.classList.add("gameboard");
   container.id = boardId;
 
-  // Create 121 cells
   for (let row = 0; row < 11; row++) {
     for (let col = 0; col < 11; col++) {
       const cell = document.createElement("div");
       cell.classList.add("cell");
 
-      // First row AND first col = labels
+      // first row AND first col = labels
       if (row === 0 || col === 0) {
         cell.classList.add("cell--label");
         cell.textContent = getLabelContent(row, col);
       } else {
-        // Game cells
+        // game cells
         cell.classList.add("cell--game");
         const coord = coordFromIndices(row - 1, col); // "A5"
         cell.dataset.coord = coord;
@@ -39,6 +40,59 @@ function getLabelContent(row, col) {
   if (col === 0) return String.fromCharCode(64 + row); // A-J
 }
 
+function updateBoard(boardElement, gameboard, showShips) {
+  let shipSet = new Set();
+  let attackSet = new Set(gameboard.prevAttacks);
+  let hitSet = new Set();
+  let missSet = new Set();
+  let sunkSet = new Set();
+
+  gameboard.ships.forEach((obj) => {
+    obj.coordinates.forEach(([row, col]) => {
+      shipSet.add(formatCoordinate(row, col));
+      if (obj.ship.sunk()) {
+        sunkSet.add(formatCoordinate(row, col));
+      }
+    });
+  });
+
+  for (const attack of attackSet) {
+    if (shipSet.has(attack)) {
+      hitSet.add(attack);
+    } else {
+      missSet.add(attack);
+    }
+  }
+
+  boardElement.querySelectorAll(".cell--game").forEach((cell) => {
+    cell.classList.add("cell--empty");
+
+    if (showShips && shipSet.has(cell.dataset.coord)) {
+      cell.classList.remove("cell--empty");
+      cell.classList.add("cell--ship");
+    }
+
+    if (attackSet.has(cell.dataset.coord)) {
+      cell.classList.remove("cell--empty");
+      cell.classList.remove("cell--ship");
+
+      if (missSet.has(cell.dataset.coord)) {
+        cell.classList.add("cell--miss");
+      }
+
+      if (hitSet.has(cell.dataset.coord)) {
+        cell.classList.add("cell--hit");
+      }
+
+      if (sunkSet.has(cell.dataset.coord)) {
+        cell.classList.remove("cell--hit");
+        cell.classList.add("cell--sunk");
+      }
+    }
+  });
+}
+
 module.exports = {
   createGameboard,
+  updateBoard,
 };

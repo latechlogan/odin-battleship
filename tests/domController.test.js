@@ -23,7 +23,6 @@ describe("domController", () => {
     test("creates 20 label cells and 100 game cells", () => {
       const labelCells = boardElement.querySelectorAll(".cell--label");
       const gameCells = boardElement.querySelectorAll(".cell--game");
-      console.log(labelCells, gameCells);
       expect(labelCells.length).toBe(21); // 10 column labels + 10 row labels + 1 unplayable corner
       expect(gameCells.length).toBe(100); // 10x10 game grid
     });
@@ -103,7 +102,7 @@ describe("domController", () => {
       gameboard = new Gameboard();
     });
 
-    test.skip("marks cells with ships when showShips is true", () => {
+    test("marks cells with ships when showShips is true", () => {
       gameboard.placeShip(new Ship(3), ["A1", "A2", "A3"]);
 
       domController.updateBoard(boardElement, gameboard, true);
@@ -119,7 +118,7 @@ describe("domController", () => {
       expect(b1Cell.classList.contains("cell--ship")).toBe(false);
     });
 
-    test.skip("does not mark cells with ships when showShips is false", () => {
+    test("does not mark cells with ships when showShips is false", () => {
       gameboard.placeShip(new Ship(3), ["A1", "A2", "A3"]);
 
       domController.updateBoard(boardElement, gameboard, false);
@@ -129,7 +128,7 @@ describe("domController", () => {
       expect(a1Cell.classList.contains("cell--ship")).toBe(false);
     });
 
-    test.skip("marks cells as hit when attacked and hit a ship", () => {
+    test("marks cells as hit when attacked and hit a ship", () => {
       gameboard.placeShip(new Ship(3), ["A1", "A2", "A3"]);
       gameboard.receiveAttack("A1");
 
@@ -140,7 +139,7 @@ describe("domController", () => {
       expect(a1Cell.classList.contains("cell--hit")).toBe(true);
     });
 
-    test.skip("marks cells as miss when attacked and missed", () => {
+    test("marks cells as miss when attacked and missed", () => {
       gameboard.placeShip(new Ship(3), ["A1", "A2", "A3"]);
       gameboard.receiveAttack("B1");
 
@@ -151,7 +150,7 @@ describe("domController", () => {
       expect(b1Cell.classList.contains("cell--miss")).toBe(true);
     });
 
-    test.skip("marks cells as sunk when ship is completely destroyed", () => {
+    test("marks cells as sunk when ship is completely destroyed", () => {
       gameboard.placeShip(new Ship(2), ["A1", "A2"]);
       gameboard.receiveAttack("A1");
       gameboard.receiveAttack("A2");
@@ -165,7 +164,7 @@ describe("domController", () => {
       expect(a2Cell.classList.contains("cell--sunk")).toBe(true);
     });
 
-    test.skip("shows hits on enemy board even when showShips is false", () => {
+    test("shows hits on enemy board even when showShips is false", () => {
       gameboard.placeShip(new Ship(3), ["A1", "A2", "A3"]);
       gameboard.receiveAttack("A1");
 
@@ -180,7 +179,7 @@ describe("domController", () => {
       expect(a2Cell.classList.contains("cell--ship")).toBe(false);
     });
 
-    test.skip("removes old state classes before applying new ones", () => {
+    test("removes old state classes before applying new ones", () => {
       gameboard.placeShip(new Ship(2), ["A1", "A2"]);
 
       // First update - shows ship
