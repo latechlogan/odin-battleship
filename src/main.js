@@ -40,7 +40,13 @@ function initGame(game) {
 
   // attach event listeners for gameplay
   domController.attachAttackListeners(computerBoard, (coord) => {
-    const result = game.player.attack(coord, game.computer);
+    let result;
+
+    if (game.isGameOver) {
+      return;
+    } else {
+      result = game.player.attack(coord, game.computer);
+    }
 
     if (!result.valid) return;
 
@@ -50,6 +56,7 @@ function initGame(game) {
 
     if (result.gameOver) {
       console.log("You win!");
+      return;
     }
 
     game.computer.attack(game.player);
