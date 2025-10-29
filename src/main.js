@@ -16,5 +16,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const computerBoard = domController.createGameboard("computer-board");
 
   playerBoardContainer.appendChild(playerBoard);
+  domController.updateBoard(playerBoard, game.player.gameboard, true);
   computerBoardContainer.appendChild(computerBoard);
+  domController.updateBoard(computerBoard, game.computer.gameboard, false);
+
+  domController.attachAttackListeners(computerBoard, (coord) => {
+    const result = game.player.attack(coord, game.computer);
+
+    if (!result.valid) return;
+
+    if (result.valid) {
+      domController.updateBoard(computerBoard, game.computer.gameboard, false);
+    }
+
+    if (result.gameOver) {
+      console.log("You win!");
+    }
+
+    game.computer.attack(game.player);
+
+    domController.updateBoard(playerBoard, game.player.gameboard, true);
+  });
 });
