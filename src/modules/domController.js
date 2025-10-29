@@ -65,6 +65,12 @@ function updateBoard(boardElement, gameboard, showShips) {
   }
 
   boardElement.querySelectorAll(".cell--game").forEach((cell) => {
+    cell.classList.remove(
+      "cell--ship",
+      "cell--miss",
+      "cell--hit",
+      "cell--sunk"
+    );
     cell.classList.add("cell--empty");
 
     if (showShips && shipSet.has(cell.dataset.coord)) {

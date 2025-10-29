@@ -10,28 +10,37 @@ class Gameboard {
     let shipCoordinates = helpers.parseCoordinates(coordinates);
 
     if (ship.length !== shipCoordinates.length) {
-      throw new Error("Coordinates don't match ship length");
+      return { valid: false, reason: "Coordinates don't match ship length" };
     }
 
     if (this.checkAvailability(coordinates) == false) {
-      throw new Error("Ships cannot overlap");
+      return { valid: false, reason: "Ships cannot overlap" };
     }
 
     if (this.verifyAdjacent(shipCoordinates) == false) {
-      throw new Error("Coordinates must be adjacent");
+      return { valid: false, reason: "Coordinates must be adjacent" };
     }
 
     if (this.verifyAlignment(shipCoordinates) == false) {
-      throw new Error("Coordinates must form a straight line");
+      return { valid: false, reason: "Coordinates must form a straight line" };
     }
 
     this.ships.push({
       ship: ship,
       coordinates: shipCoordinates,
     });
+
+    return { valid: true };
+  }
+
+  clearShips() {
+    this.ships = [];
   }
 
   receiveAttack(coord) {
+    // disable ship placement with first attack
+    document.querySelector("#randomize-player-ships").disabled = true;
+
     let attackCoordinates;
     try {
       attackCoordinates = helpers.parseCoordinates(coord);

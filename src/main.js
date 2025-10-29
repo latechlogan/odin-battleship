@@ -1,8 +1,11 @@
 import "../src/styles.css";
 const Game = require("./modules/game");
 const domController = require("./modules/domController");
+const helpers = require("./modules/helpers");
 
 let game;
+let playerBoard;
+let computerBoard;
 
 document.addEventListener("DOMContentLoaded", () => {
   createNewGame();
@@ -12,7 +15,13 @@ document.querySelector("#new-game").addEventListener("click", () => {
   createNewGame();
 });
 
-// add reset button
+document
+  .querySelector("#randomize-player-ships")
+  .addEventListener("click", () => {
+    game.player.gameboard.clearShips();
+    helpers.placeShipsRandom(game.player);
+    domController.updateBoard(playerBoard, game.player.gameboard, true);
+  });
 
 function createNewGame() {
   game = new Game();
@@ -20,6 +29,9 @@ function createNewGame() {
 }
 
 function initGame(game) {
+  // enable ship placement with new game initialization
+  document.querySelector("#randomize-player-ships").disabled = false;
+
   // create and update both gameboards
   const playerBoardContainer = document.querySelector(
     "#player-board-container"
@@ -28,8 +40,8 @@ function initGame(game) {
     "#computer-board-container"
   );
 
-  const playerBoard = domController.createGameboard("player-board");
-  const computerBoard = domController.createGameboard("computer-board");
+  playerBoard = domController.createGameboard("player-board");
+  computerBoard = domController.createGameboard("computer-board");
 
   playerBoardContainer.innerHTML = "";
   playerBoardContainer.appendChild(playerBoard);

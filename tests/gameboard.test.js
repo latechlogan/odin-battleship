@@ -11,7 +11,8 @@ describe("gameboard", () => {
   //ship placement
   test("should place ship at given coordinates", () => {
     const destroyer = new Ship(2);
-    testGameboard.placeShip(destroyer, ["A1", "A2"]);
+    const result = testGameboard.placeShip(destroyer, ["A1", "A2"]);
+    expect(result.valid).toBe(true);
     expect(testGameboard.ships[0]).toEqual({
       ship: destroyer,
       coordinates: [
@@ -116,46 +117,48 @@ describe("gameboard", () => {
   // ship placement validation
   test("should not allow ship placement when coordinates don't match ship length", () => {
     const destroyer = new Ship(2);
-    expect(() => {
-      testGameboard.placeShip(destroyer, ["A1", "A2", "A3"]);
-    }).toThrow();
+    const result = testGameboard.placeShip(destroyer, ["A1", "A2", "A3"]);
+    expect(result.valid).toBe(false);
+    expect(result.reason).toBe("Coordinates don't match ship length");
   });
 
   test("should not allow ship placement when ships overlap", () => {
     const destroyer = new Ship(2);
     const submarine = new Ship(3);
-    testGameboard.placeShip(destroyer, ["A1", "A2"]);
-    expect(() => {
-      testGameboard.placeShip(submarine, ["A2", "A3", "A4"]);
-    }).toThrow("Ships cannot overlap");
+    const result1 = testGameboard.placeShip(destroyer, ["A1", "A2"]);
+    expect(result1.valid).toBe(true);
+
+    const result2 = testGameboard.placeShip(submarine, ["A2", "A3", "A4"]);
+    expect(result2.valid).toBe(false);
+    expect(result2.reason).toBe("Ships cannot overlap");
   });
 
   test("should not allow ship placement when coordinates are not adjacent", () => {
     const destroyer = new Ship(2);
-    expect(() => {
-      testGameboard.placeShip(destroyer, ["A1", "A3"]);
-    }).toThrow("Coordinates must be adjacent");
+    const result = testGameboard.placeShip(destroyer, ["A1", "A3"]);
+    expect(result.valid).toBe(false);
+    expect(result.reason).toBe("Coordinates must be adjacent");
   });
 
   test("should not allow ship placement when coordinates don't form a line", () => {
     const submarine = new Ship(3);
-    expect(() => {
-      testGameboard.placeShip(submarine, ["A1", "A2", "B2"]);
-    }).toThrow("Coordinates must form a straight line");
+    const result = testGameboard.placeShip(submarine, ["A1", "A2", "B2"]);
+    expect(result.valid).toBe(false);
+    expect(result.reason).toBe("Coordinates must form a straight line");
   });
 
   test("should allow valid horizontal ship placement", () => {
     const destroyer = new Ship(3);
-    expect(() => {
-      testGameboard.placeShip(destroyer, ["A1", "A2", "A3"]);
-    }).not.toThrow();
+    const result = testGameboard.placeShip(destroyer, ["A1", "A2", "A3"]);
+    expect(result.valid).toBe(true);
+    expect(testGameboard.ships.length).toBe(1);
   });
 
   test("should allow valid vertical ship placement", () => {
     const destroyer = new Ship(3);
-    expect(() => {
-      testGameboard.placeShip(destroyer, ["A1", "B1", "C1"]);
-    }).not.toThrow();
+    const result = testGameboard.placeShip(destroyer, ["A1", "B1", "C1"]);
+    expect(result.valid).toBe(true);
+    expect(testGameboard.ships.length).toBe(1);
   });
 
   // attack coordinate validation
