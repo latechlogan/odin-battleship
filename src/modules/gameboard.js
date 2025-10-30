@@ -39,7 +39,10 @@ class Gameboard {
 
   receiveAttack(coord) {
     // disable ship placement with first attack
-    document.querySelector("#randomize-player-ships").disabled = true;
+    const randomizeButton = document.querySelector("#randomize-player-ships");
+    if (randomizeButton) {
+      randomizeButton.disabled = true;
+    }
 
     let attackCoordinates;
     try {
