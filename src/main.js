@@ -60,7 +60,7 @@ function initGame(game) {
     if (game.isGameOver) {
       return;
     } else {
-      result = game.player.attack(coord, game.computer);
+      result = game.playTurn(coord);
     }
 
     if (!result.valid) return;
@@ -74,8 +74,7 @@ function initGame(game) {
       return;
     }
 
-    game.computer.attack(game.player);
-
+    game.playTurn();
     domController.updateBoard(playerBoard, game.player.gameboard, true);
   });
 }

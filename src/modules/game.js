@@ -48,8 +48,10 @@ class Game {
 
     if (coord) {
       if (this.isPlayerTurn) {
-        this.#isPlayerTurn = !this.#isPlayerTurn;
         result = this.player.attack(coord, this.computer);
+        if (result.valid) {
+          this.#isPlayerTurn = !this.#isPlayerTurn;
+        }
       } else {
         return {
           valid: false,
@@ -63,8 +65,10 @@ class Game {
           reason: "Coordinates must be provided on player turn",
         };
       } else {
-        this.#isPlayerTurn = !this.#isPlayerTurn;
         result = this.computer.attack(this.player);
+        if (result.valid) {
+          this.#isPlayerTurn = !this.#isPlayerTurn;
+        }
       }
     }
 
