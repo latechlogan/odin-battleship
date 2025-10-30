@@ -45,12 +45,10 @@ function initGame(game) {
 
   playerBoardContainer.innerHTML = "";
   playerBoardContainer.appendChild(playerBoard);
-  helpers.placeShipsRandom(game.player);
   domController.updateBoard(playerBoard, game.player.gameboard, true);
 
   computerBoardContainer.innerHTML = "";
   computerBoardContainer.appendChild(computerBoard);
-  helpers.placeShipsRandom(game.computer);
   domController.updateBoard(computerBoard, game.computer.gameboard, false);
 
   // attach event listeners for gameplay

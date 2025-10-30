@@ -1,5 +1,6 @@
 const HumanPlayer = require("./humanPlayer");
 const ComputerPlayer = require("./computerPlayer");
+const helpers = require("./helpers");
 
 class Game {
   #isPlayerTurn = true;
@@ -8,6 +9,10 @@ class Game {
   constructor() {
     this.player = new HumanPlayer();
     this.computer = new ComputerPlayer();
+
+    // Place ships for both players
+    helpers.placeShipsRandom(this.player);
+    helpers.placeShipsRandom(this.computer);
   }
 
   get gameState() {
@@ -74,6 +79,17 @@ class Game {
 
     this.#lastResult = result;
     return result;
+  }
+
+  reset() {
+    this.player = new HumanPlayer();
+    this.computer = new ComputerPlayer();
+    this.#isPlayerTurn = true;
+    this.#lastResult = null;
+
+    // Place ships for both players
+    helpers.placeShipsRandom(this.player);
+    helpers.placeShipsRandom(this.computer);
   }
 }
 
