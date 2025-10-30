@@ -1,5 +1,4 @@
 const Ship = require("./ship");
-const HumanPlayer = require("./humanPlayer");
 
 function parseCoordinates(input) {
   const parse = function (input) {
