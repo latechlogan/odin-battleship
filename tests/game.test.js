@@ -124,16 +124,34 @@ describe("Game", () => {
   describe("Win Conditions", () => {
     test("should detect when player wins (all computer ships sunk)", () => {
       sinkShips(game.computer.gameboard, [0, 1, 2, 3]);
-      game.computer.gameboard.ships[4].ship.hit();
-      const result = game.playTurn("J9");
+      // Hit ship 4 all but one time
+      const ship4 = game.computer.gameboard.ships[4];
+      for (let i = 0; i < ship4.ship.length - 1; i++) {
+        ship4.ship.hit();
+      }
+      // Find an actual coordinate of ship 4 to attack for the final blow
+      const finalCoord = helpers.formatCoordinate(
+        ship4.coordinates[0][0],
+        ship4.coordinates[0][1]
+      );
+      const result = game.playTurn(finalCoord);
       expect(result.gameOver).toBe(true);
       expect(game.isGameOver).toBe(true);
     });
 
     test("should detect when computer wins (all player ships sunk)", () => {
       sinkShips(game.player.gameboard, [0, 1, 2, 3]);
-      game.player.gameboard.ships[4].ship.hit();
-      jest.spyOn(helpers, "randomCoordinate").mockReturnValue("I2");
+      // Hit ship 4 all but one time
+      const ship4 = game.player.gameboard.ships[4];
+      for (let i = 0; i < ship4.ship.length - 1; i++) {
+        ship4.ship.hit();
+      }
+      // Mock the computer to attack an actual coordinate of ship 4
+      const finalCoord = helpers.formatCoordinate(
+        ship4.coordinates[0][0],
+        ship4.coordinates[0][1]
+      );
+      jest.spyOn(helpers, "randomCoordinate").mockReturnValue(finalCoord);
       game.playTurn("A1"); // player turn
       const result = game.playTurn(); // computer turn
       expect(result.gameOver).toBe(true);
