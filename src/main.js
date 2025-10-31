@@ -23,7 +23,16 @@ document
     domController.updateBoard(playerBoard, game.player.gameboard, true);
   });
 
+function clearDynamicContent() {
+  document.querySelector(".prev-attacks").innerHTML = "";
+  document.querySelector(".ship-status").innerHTML = "";
+  document.querySelector(".alerts").innerHTML = `
+    <div class="winner-message">Defeat the<br />enemy fleet.</div>
+  `;
+}
+
 function createNewGame() {
+  clearDynamicContent();
   game = new Game();
   initGame(game);
 }
@@ -71,11 +80,16 @@ function initGame(game) {
 
     if (result.gameOver) {
       domController.displayWinner(game.gameState);
+      return;
     }
 
     game.playTurn();
     domController.updateBoard(playerBoard, game.player.gameboard, true);
     domController.displayAttacks(game.gameState);
     domController.displayShipStatus(game.gameState);
+
+    if (game.isGameOver) {
+      domController.displayWinner(game.gameState);
+    }
   });
 }
