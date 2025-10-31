@@ -7,15 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <div class="game-controls">
-      <h1>⚓️ Odin Battleship</h1>
-      <button id="new-game">New Game</button>
-      <button id="randomize-player-ships">Randomize My Fleet</button>
+    <div class="game-details">
+      <div class="controls">
+        <h1>⚓️ Odin Battleship</h1>
+        <button id="new-game">New Game</button>
+        <button id="randomize-player-ships">Randomize My Fleet</button>
+      </div>
+      <div class="messages-container">
+        <div class="alerts"></div>
+        <div class="prev-attacks-container">
+          <h2 class="prev-attacks-header">Previous Attacks:</h2>
+          <div class="prev-attacks"></div>
+        </div>
+        <div class="ship-status"></div>
+      </div>
     </div>
     <div class="computer-section">
       <h2>Enemy Fleet</h2>

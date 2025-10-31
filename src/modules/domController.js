@@ -98,6 +98,30 @@ function updateBoard(boardElement, gameboard, showShips) {
   });
 }
 
+function displayAttacks(state) {
+  let attacker = !state.isPlayerTurn ? "Player" : "Computer"; // opposite of what you'd expect
+  let attackResult = state.lastResult.hit ? "hit 🔥" : "missed 💦";
+
+  let messageContainer = document.querySelector(".prev-attacks");
+  if (messageContainer.childElementCount >= 2) {
+    messageContainer.innerHTML = "";
+  }
+
+  let message = document.createElement("div");
+  message.classList.add("message");
+  message.textContent = `${attacker}:  Attack at ${
+    state.isPlayerTurn
+      ? Array.from(state.playerGameboard.prevAttacks).pop()
+      : Array.from(state.computerGameboard.prevAttacks).pop()
+  } ${state.lastResult.sunk ? "sunk an opponent ship 💀" : attackResult}`;
+
+  messageContainer.append(message);
+}
+
+function displayShipStatus(state) {
+  console.log(state);
+}
+
 function attachAttackListeners(boardElement, callback) {
   boardElement.addEventListener("click", (e) => {
     if (e.target.classList.contains("cell--game")) {
@@ -109,5 +133,6 @@ function attachAttackListeners(boardElement, callback) {
 module.exports = {
   createGameboard,
   updateBoard,
+  displayAttacks,
   attachAttackListeners,
 };

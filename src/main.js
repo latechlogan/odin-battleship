@@ -65,6 +65,7 @@ function initGame(game) {
 
     if (result.valid) {
       domController.updateBoard(computerBoard, game.computer.gameboard, false);
+      domController.displayAttacks(game.gameState);
     }
 
     if (result.gameOver) {
@@ -74,5 +75,6 @@ function initGame(game) {
 
     game.playTurn();
     domController.updateBoard(playerBoard, game.player.gameboard, true);
+    domController.displayAttacks(game.gameState);
   });
 }

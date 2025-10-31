@@ -74,7 +74,8 @@ h6 {
 }
 
 body {
-  font-family: "Special Gothic Condensed One", sans-serif;
+  font-family: "Saira Semi Condensed", sans-serif;
+  font-weight: 400;
   width: 100vw;
   max-width: 900px;
   height: 100vh;
@@ -90,10 +91,66 @@ body {
 
 .game-details {
   grid-area: controls;
-  background-color: #eee;
+  background-color: hsl(0, 0%, 93%);
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 2rem;
   margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.messages-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.alerts {
+  width: 100%;
+  height: 100%;
+}
+
+.prev-attacks-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.prev-attacks-header {
+  margin: 0.5rem 0;
+}
+
+.prev-attacks {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  mask-image: linear-gradient(
+    transparent 0%,
+    black 2%,
+    black 98%,
+    transparent 100%
+  );
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.message {
+  white-space: pre;
+}
+
+.prev-attacks::-webkit-scrollbar {
+  width: 0; /* For vertical scrollbar */
+  height: 0; /* For horizontal scrollbar */
+  display: none; /* Hide the scrollbar entirely */
 }
 
 .computer-section {
