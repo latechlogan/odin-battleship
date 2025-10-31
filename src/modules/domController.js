@@ -99,12 +99,12 @@ function updateBoard(boardElement, gameboard, showShips) {
 }
 
 function displayAttacks(state) {
-  let attacker = !state.isPlayerTurn ? "Player" : "Computer"; // opposite of what you'd expect
+  let attacker = !state.isPlayerTurn ? "You" : "Enemy"; // opposite of what you'd expect
   let attackResult = state.lastResult.hit ? "hit 🔥" : "missed 💦";
 
-  let messageContainer = document.querySelector(".prev-attacks");
-  if (messageContainer.childElementCount >= 2) {
-    messageContainer.innerHTML = "";
+  let attacksContainer = document.querySelector(".prev-attacks");
+  if (attacksContainer.childElementCount >= 2) {
+    attacksContainer.innerHTML = "";
   }
 
   let message = document.createElement("div");
@@ -115,11 +115,45 @@ function displayAttacks(state) {
       : Array.from(state.computerGameboard.prevAttacks).pop()
   } ${state.lastResult.sunk ? "sunk an opponent ship 💀" : attackResult}`;
 
-  messageContainer.append(message);
+  attacksContainer.append(message);
 }
 
 function displayShipStatus(state) {
-  console.log(state);
+  let shipStatus = document.querySelector(".ship-status");
+
+  let playerShips = document.createElement("div");
+  playerShips.classList.add("message");
+  let playerShipsCount = state.playerGameboard.ships.filter((element) => {
+    return element.ship.length > element.ship.hits;
+  });
+  playerShips.textContent = `Your Fleet:  ${playerShipsCount.length}/5 ships remaining`;
+
+  let computerShips = document.createElement("div");
+  computerShips.classList.add("message");
+  let computerShipsCount = state.computerGameboard.ships.filter((element) => {
+    return element.ship.length > element.ship.hits;
+  });
+  computerShips.textContent = `Enemy Fleet:  ${computerShipsCount.length}/5 ships remaining`;
+
+  shipStatus.innerHTML = "";
+  shipStatus.append(playerShips, computerShips);
+}
+
+function displayWinner(state) {
+  let winner = !state.isPlayerTurn ? "player" : "computer";
+
+  let winnerMessage = document.createElement("p");
+  winnerMessage.classList.add("winner-message");
+  if (winner === "player") {
+    winnerMessage.textContent = "Victory is ours!";
+  } else {
+    winnerMessage.textContent = "We've been defeated.";
+  }
+
+  let alertSection = document.querySelector(".alerts");
+
+  alertSection.innerHTML = "";
+  alertSection.append(winnerMessage);
 }
 
 function attachAttackListeners(boardElement, callback) {
@@ -134,5 +168,7 @@ module.exports = {
   createGameboard,
   updateBoard,
   displayAttacks,
+  displayShipStatus,
+  displayWinner,
   attachAttackListeners,
 };

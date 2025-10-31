@@ -18,13 +18,29 @@
         <button id="new-game">New Game</button>
         <button id="randomize-player-ships">Randomize My Fleet</button>
       </div>
+
       <div class="messages-container">
-        <div class="alerts"></div>
-        <div class="prev-attacks-container">
-          <h2 class="prev-attacks-header">Previous Attacks:</h2>
-          <div class="prev-attacks"></div>
+        <div class="alerts">
+          <div class="winner-message">Defeat the<br />enemy fleet.</div>
         </div>
-        <div class="ship-status"></div>
+
+        <div class="prev-attacks-container">
+          <h2 class="prev-attacks-header message-section-header">
+            Last Attack:
+          </h2>
+          <div class="prev-attacks">
+            <!-- dynamic div with message class -->
+          </div>
+        </div>
+
+        <div class="ship-status-container">
+          <h2 class="ship-status-header message-section-header">
+            Fleet Status:
+          </h2>
+          <div class="ship-status">
+            <!-- dynamic div with message class -->
+          </div>
+        </div>
       </div>
     </div>
     <div class="computer-section">

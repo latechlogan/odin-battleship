@@ -66,15 +66,16 @@ function initGame(game) {
     if (result.valid) {
       domController.updateBoard(computerBoard, game.computer.gameboard, false);
       domController.displayAttacks(game.gameState);
+      domController.displayShipStatus(game.gameState);
     }
 
     if (result.gameOver) {
-      console.log("You win!");
-      return;
+      domController.displayWinner(game.gameState);
     }
 
     game.playTurn();
     domController.updateBoard(playerBoard, game.player.gameboard, true);
     domController.displayAttacks(game.gameState);
+    domController.displayShipStatus(game.gameState);
   });
 }
